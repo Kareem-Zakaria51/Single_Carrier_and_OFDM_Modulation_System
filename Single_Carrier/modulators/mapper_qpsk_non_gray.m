@@ -1,7 +1,7 @@
-function [symbols, nPad] = mapper_qpsk_fig3(bits)
-% MAPPER_QPSK_FIG3  Non-Gray QPSK (project spec, Figure 3), baseband.
+function [symbols, nPad] = mapper_qpsk_non_gray(bits)
+% MAPPER_QPSK_non_gray  Non-Gray QPSK (project spec, Figure 3), baseband.
 %
-%   [symbols, nPad] = mapper_qpsk_fig3(bits)
+%   [symbols, nPad] = mapper_qpsk_non_gray(bits)
 %
 %   Same interface and normalisation (Es = 2, Eb = 1) as mapper_qpsk_fig2.
 %
@@ -17,7 +17,7 @@ function [symbols, nPad] = mapper_qpsk_fig3(bits)
     k = 2;
     bits = bits(:).';
     if any(bits ~= 0 & bits ~= 1)
-        error('mapper_qpsk_fig3:badInput', 'bits must contain only 0 and 1.');
+        error('mapper_qpsk_non_gray:badInput', 'bits must contain only 0 and 1.');
     end
     nPad = mod(-numel(bits), k);
     bits = [bits, zeros(1, nPad)];

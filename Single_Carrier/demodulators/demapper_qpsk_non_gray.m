@@ -1,4 +1,4 @@
-function bits = demapper_qpsk_fig3(r, nBits)
+function bits = demapper_qpsk_non_gray(r, nBits)
 % DEMAPPER_QPSK_FIG3  Hard-decision (minimum-distance) demapper, Figure 3 QPSK.
 %
 %   bits = demapper_qpsk_fig3(r)          -> 1 x 2*numel(r) bits
