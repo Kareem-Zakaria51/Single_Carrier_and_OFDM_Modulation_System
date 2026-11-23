@@ -1,7 +1,7 @@
-function [symbols, nPad] = mapper_qpsk_fig2(bits)
-% MAPPER_QPSK_FIG2  Gray-mapped QPSK (project spec, Figure 2), baseband.
+function [symbols, nPad] = mapper_qpsk_gray(bits)
+% MAPPER_QPSK_gray  Gray-mapped QPSK (project spec, Figure 2), baseband.
 %
-%   [symbols, nPad] = mapper_qpsk_fig2(bits)
+%   [symbols, nPad] = mapper_qpsk_gray(bits)
 %
 %   bits    : vector of 0/1, any orientation, any length.
 %   symbols : 1 x Nsym complex row vector, Nsym = ceil(numel(bits)/2).
@@ -19,7 +19,7 @@ function [symbols, nPad] = mapper_qpsk_fig2(bits)
     k = 2;
     bits = bits(:).';
     if any(bits ~= 0 & bits ~= 1)
-        error('mapper_qpsk_fig2:badInput', 'bits must contain only 0 and 1.');
+        error('mapper_qpsk_gray:badInput', 'bits must contain only 0 and 1.');
     end
     nPad = mod(-numel(bits), k);
     bits = [bits, zeros(1, nPad)];
