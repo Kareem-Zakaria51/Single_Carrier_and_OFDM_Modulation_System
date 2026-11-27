@@ -1,4 +1,4 @@
-%% QPSK_Rayleigh.m  -  Part 2 (Kareem Ash)
+%% QPSK_Rayleigh.m  -  Part 2 (QPSK)
 % BER of Gray-mapped QPSK (Part 1, Figure 2) over a Rayleigh flat-fading
 % channel with perfect channel knowledge and zero-forcing equalisation.
 %
@@ -7,17 +7,23 @@
 %
 % Conventions (same as Part 1): Eb = 1, so QPSK symbols are (+-1 +- 1j),
 % Es = 2, and N0 = 1/(Eb/N0). awgn_noise() already uses variance N0/2 per
-% dimension.  Run from anywhere; results go to Single_Carrier/results/.
 
 clear; clc; close all;
 
-%% Paths
+%% Paths 
 here = fileparts(mfilename('fullpath'));
-root = fileparts(here);
+if isempty(here), here = pwd; end
+root = here;                                   % walk up until the folder holding Common/ is found
+while ~exist(fullfile(root, 'Common'), 'dir') && ~strcmp(root, fileparts(root))
+    root = fileparts(root);
+end
+if ~exist(fullfile(root, 'Common'), 'dir')
+    error('Common/ folder not found. Keep this script inside the project folder.');
+end
 addpath(fullfile(root, 'Common'));
-addpath(fullfile(here, 'modulators'));
-addpath(fullfile(here, 'demodulators'));
-outdir = fullfile(here, 'results');
+addpath(fullfile(root, 'Single_Carrier', 'modulators'));
+addpath(fullfile(root, 'Single_Carrier', 'demodulators'));
+outdir = fullfile(root, 'RayleighFlat', 'results');
 if ~exist(outdir, 'dir'), mkdir(outdir); end
 
 %% Settings
@@ -87,9 +93,12 @@ grid on; xlabel('E_b/N_0 (dB)'); ylabel('BER');
 title('QPSK (Gray) over Rayleigh flat fading, zero-forcing equalisation');
 legend('Location', 'southwest');
 axis([0 35 1e-6 1]);
-print(fig, fullfile(outdir, 'BER_QPSK_Rayleigh.png'), '-dpng', '-r150');
+imgFile = fullfile(outdir, 'BER_QPSK_Rayleigh.png');
+print(fig, imgFile, '-dpng', '-r150');
+fprintf('Figure saved to: %s\n', imgFile);
+set(fig, 'Visible', 'on');                     % also show it on screen
 
-%% Short report (printed, and mirrored in results/Kareem_Ash_comments.md)
+%% Short report 
 fprintf('\n--- Summary ---\n');
 fine     = 0:0.01:35;
 ray_fine = 0.5 * (1 - sqrt(10.^(fine/10) ./ (1 + 10.^(fine/10))));
